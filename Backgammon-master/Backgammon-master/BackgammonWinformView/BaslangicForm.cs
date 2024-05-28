@@ -30,9 +30,9 @@ namespace BackgammonWinformView
 
             if (result == DialogResult.OK)
             {
-                BitisForm btf = new BitisForm();
-                btf.Show();
-                this.Hide(); // Mevcut formu gizle
+                Application.Exit();
+               
+                 // Mevcut formu gizle
             }
             else if (result == DialogResult.Cancel)
             {

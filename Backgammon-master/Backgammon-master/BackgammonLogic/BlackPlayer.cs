@@ -173,26 +173,29 @@ namespace BackgammonLogic
 
         public override bool IsLegalPlayerFinalMove(Board gameBoard, int fromIndex, int toIndex, int cubeNumber)// check if came from bar? -1...
         {
-            if (fromIndex - toIndex == cubeNumber)
-            {
-                if (gameBoard.Triangles[toIndex].CheckersColor == null || gameBoard.Triangles[toIndex].CheckersColor == CheckerColor.Black)
+
+          
+                if (fromIndex - toIndex == cubeNumber)
                 {
-                    return true;
+                    if (gameBoard.Triangles[toIndex].CheckersColor == null || gameBoard.Triangles[toIndex].CheckersColor == CheckerColor.Black)
+                    {
+                        return true;
+                    }
                 }
-            }
 
             return false;
         }
 
         public override bool IsLegalPlayerFinalMoveEat(Board gameBoard, int fromIndex, int toIndex, int cubeNumber)// check if came from bar? -1...
         {
-            if (fromIndex - toIndex == cubeNumber)
-            {
-                if (gameBoard.Triangles[toIndex].CheckersColor == CheckerColor.Red && gameBoard.Triangles[toIndex].NumOfCheckers == 1)
+
+                if (fromIndex - toIndex == cubeNumber)
                 {
-                    return true;
+                    if (gameBoard.Triangles[toIndex].CheckersColor == CheckerColor.Red && gameBoard.Triangles[toIndex].NumOfCheckers == 1)
+                    {
+                        return true;
+                    }
                 }
-            }
 
             return false;
         }

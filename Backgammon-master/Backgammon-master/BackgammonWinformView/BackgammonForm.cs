@@ -641,8 +641,18 @@ namespace BackgammonWinformView
 
         private void button1_Click(object sender, EventArgs e)
         {
-            BitisForm bitisForm = new BitisForm();
-            bitisForm.ShowDialog();
+            DialogResult result = MessageBox.Show("Çıkış Yapmak İstediğinize Emin Misiniz?", "Çıkış", MessageBoxButtons.OKCancel);
+
+            if (result == DialogResult.OK)
+            {
+                Application.Exit();
+
+                // Mevcut formu gizle
+            }
+            else if (result == DialogResult.Cancel)
+            {
+                // Hiçbir şey yapma, mevcut formda kal
+            }
         }
     }
 }
