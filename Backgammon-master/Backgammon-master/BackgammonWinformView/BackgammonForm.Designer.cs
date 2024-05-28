@@ -760,6 +760,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1644, 853);
             this.Controls.Add(this.redBarHalfPictureBox);
             this.Controls.Add(this.sidePanel);
@@ -919,7 +920,6 @@
         private System.Windows.Forms.PictureBox blackCheckersBearOff;
         private System.Windows.Forms.PictureBox redCheckersBearOff;
         private System.Windows.Forms.Button ÇıkışButton;
-        private System.Windows.Forms.Button button2;
     }
 }
 
