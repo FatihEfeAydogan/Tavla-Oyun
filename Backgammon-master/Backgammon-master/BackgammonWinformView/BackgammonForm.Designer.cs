@@ -85,6 +85,7 @@
             this.firstDiePictureBox = new System.Windows.Forms.PictureBox();
             this.secondDiePictureBox = new System.Windows.Forms.PictureBox();
             this.sidePanel = new System.Windows.Forms.Panel();
+            this.label25 = new System.Windows.Forms.Label();
             this.ÇıkışButton = new System.Windows.Forms.Button();
             this.blackCheckersBearOff = new System.Windows.Forms.PictureBox();
             this.redCheckersBearOff = new System.Windows.Forms.PictureBox();
@@ -702,6 +703,7 @@
             // 
             // sidePanel
             // 
+            this.sidePanel.Controls.Add(this.label25);
             this.sidePanel.Controls.Add(this.ÇıkışButton);
             this.sidePanel.Controls.Add(this.blackCheckersBearOff);
             this.sidePanel.Controls.Add(this.redCheckersBearOff);
@@ -717,12 +719,21 @@
             this.sidePanel.Click += new System.EventHandler(this.sidePanel_Click);
             this.sidePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.sidePanel_Paint);
             // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(57, 320);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(160, 16);
+            this.label25.TabIndex = 63;
+            this.label25.Text = "Taşları aşağıya toplayınız";
+            // 
             // ÇıkışButton
             // 
-            this.ÇıkışButton.Location = new System.Drawing.Point(91, 248);
+            this.ÇıkışButton.Location = new System.Drawing.Point(73, 238);
             this.ÇıkışButton.Margin = new System.Windows.Forms.Padding(4);
             this.ÇıkışButton.Name = "ÇıkışButton";
-            this.ÇıkışButton.Size = new System.Drawing.Size(112, 33);
+            this.ÇıkışButton.Size = new System.Drawing.Size(144, 56);
             this.ÇıkışButton.TabIndex = 62;
             this.ÇıkışButton.Text = "Çıkış";
             this.ÇıkışButton.UseVisualStyleBackColor = true;
@@ -730,6 +741,7 @@
             // 
             // blackCheckersBearOff
             // 
+            this.blackCheckersBearOff.BackColor = System.Drawing.Color.Turquoise;
             this.blackCheckersBearOff.Location = new System.Drawing.Point(153, 361);
             this.blackCheckersBearOff.Margin = new System.Windows.Forms.Padding(4);
             this.blackCheckersBearOff.Name = "blackCheckersBearOff";
@@ -739,6 +751,7 @@
             // 
             // redCheckersBearOff
             // 
+            this.redCheckersBearOff.BackColor = System.Drawing.Color.Turquoise;
             this.redCheckersBearOff.Location = new System.Drawing.Point(49, 361);
             this.redCheckersBearOff.Margin = new System.Windows.Forms.Padding(4);
             this.redCheckersBearOff.Name = "redCheckersBearOff";
@@ -850,6 +863,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.firstDiePictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.secondDiePictureBox)).EndInit();
             this.sidePanel.ResumeLayout(false);
+            this.sidePanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.blackCheckersBearOff)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.redCheckersBearOff)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.redBarHalfPictureBox)).EndInit();
@@ -920,6 +934,7 @@
         private System.Windows.Forms.PictureBox blackCheckersBearOff;
         private System.Windows.Forms.PictureBox redCheckersBearOff;
         private System.Windows.Forms.Button ÇıkışButton;
+        private System.Windows.Forms.Label label25;
     }
 }
 

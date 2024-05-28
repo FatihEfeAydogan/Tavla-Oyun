@@ -21,6 +21,7 @@ namespace BackgammonWinformView
         {
             BackgammonForm bgf = new BackgammonForm();
             bgf.Show();
+            this.Hide();
         }
 
         private void Cikis_Click(object sender, EventArgs e)
