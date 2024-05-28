@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BackgammonLogic
 {
@@ -7,128 +10,222 @@ namespace BackgammonLogic
     {
         public RedPlayer(string name, CheckerColor playerColor) : base(name, playerColor)
         {
+
         }
 
         public override IEnumerable<KeyValuePair<int, int>> GetAvailableMoves(Board gameBoard, Dice gameDice)
         {
-            if (gameBoard.GameBar.NumOfRedCheckers > 0)
+            if (gameBoard.GameBar.NumOfRedCheckers == 0)  // if he's stuck on the bar, no point counting his normal moves
+            {
+                List<KeyValuePair<int, int>> AvailableMoves = new List<KeyValuePair<int, int>>();
+
+                for (int i = 0; i < gameBoard.Triangles.Count; i++)
+                {
+                    if (!gameDice.RolledDouble)  // not double. if double - only check once (next if)
+                    {
+                        if (i + gameDice.FirstCube <= 23 && gameDice.FirstCube != 0)  // don't step out of array boundries, check if cube was not 'reset' to 0
+                        {
+                            if (IsLegalPlayerInitialMove(gameBoard, i) && IsLegalPlayerFinalMove(gameBoard, i, i + gameDice.FirstCube, gameDice.FirstCube))
+                            {
+                                AvailableMoves.Add(new KeyValuePair<int, int>(i, i + gameDice.FirstCube));
+                            }
+                        }
+                    }
+
+                    if (i + gameDice.SecondCube <= 23 && gameDice.SecondCube != 0)  // don't step out of array boundries, check if cube was not 'reset' to 0)
+                    {
+                        // 2nd cube can also be an available 'move' (if he hasn't rolled double)
+                        if (IsLegalPlayerInitialMove(gameBoard, i) && IsLegalPlayerFinalMove(gameBoard, i, i + gameDice.SecondCube, gameDice.SecondCube))
+                        {
+                            AvailableMoves.Add(new KeyValuePair<int, int>(i, i + gameDice.SecondCube));
+                        }
+                    }
+                }
+
+                return AvailableMoves;
+            }
+            else
             {
                 return GetAvailableMovesFromBar(gameBoard, gameDice);
             }
-
-            var availableMoves = new List<KeyValuePair<int, int>>();
-
-            for (int i = gameBoard.Triangles.Count - 1; i >= 0; i--)
-            {
-                if (!gameDice.RolledDouble)
-                {
-                    AddMoveIfValid(gameBoard, gameDice.FirstCube, availableMoves, i, i + gameDice.FirstCube);
-                }
-
-                AddMoveIfValid(gameBoard, gameDice.SecondCube, availableMoves, i, i + gameDice.SecondCube);
-            }
-
-            return availableMoves;
         }
 
         public override IEnumerable<KeyValuePair<int, int>> GetAvailableMovesFromBar(Board gameBoard, Dice gameDice)
         {
-            var availableMoves = new List<KeyValuePair<int, int>>();
+            List<KeyValuePair<int, int>> AvailableMoves = new List<KeyValuePair<int, int>>();
 
-            AddMoveFromBarIfValid(gameBoard, gameDice.FirstCube, availableMoves);
-            AddMoveFromBarIfValid(gameBoard, gameDice.SecondCube, availableMoves);
+            if (gameDice.FirstCube != 0)  // check if that cube wasn't reset
+            {
+                if (IsLegalPlayerFinalMove(gameBoard, -1, -1 + gameDice.FirstCube, gameDice.FirstCube))
+                {
+                    AvailableMoves.Add(new KeyValuePair<int, int>(-1, -1 + gameDice.FirstCube));
+                }
+            }
 
-            return availableMoves;
+            if (gameDice.SecondCube != 0)
+            {
+                if (IsLegalPlayerFinalMove(gameBoard, -1, -1 + gameDice.SecondCube, gameDice.SecondCube))
+                {
+                    AvailableMoves.Add(new KeyValuePair<int, int>(-1, -1 + gameDice.SecondCube));
+                }
+            }
+
+            return AvailableMoves;
         }
 
         public override IEnumerable<KeyValuePair<int, int>> GetAvailableMovesEat(Board gameBoard, Dice gameDice)
         {
-            if (gameBoard.GameBar.NumOfRedCheckers > 0)
+            if (gameBoard.GameBar.NumOfRedCheckers == 0)  // if he's stuck on the bar, no point counting his normal moves
+            {
+                List<KeyValuePair<int, int>> AvailableMovesEat = new List<KeyValuePair<int, int>>();
+
+                for (int i = 0; i < gameBoard.Triangles.Count; i++)
+                {
+                    if (!gameDice.RolledDouble)  // not double. if double - only check once (next if)
+                    {
+                        if (i + gameDice.FirstCube <= 23 && gameDice.FirstCube != 0)  // don't step out of array boundries, check if cube was not 'reset' to 0
+                        {
+                            if (IsLegalPlayerInitialMove(gameBoard, i) && IsLegalPlayerFinalMoveEat(gameBoard, i, i + gameDice.FirstCube, gameDice.FirstCube))
+                            {
+                                AvailableMovesEat.Add(new KeyValuePair<int, int>(i, i + gameDice.FirstCube));
+                            }
+                        }
+                    }
+
+                    if (i + gameDice.SecondCube <= 23 && gameDice.SecondCube != 0)  // don't step out of array boundries, check if cube was not 'reset' to 0
+                    {
+                        // 2nd cube can also be an available 'eat move'
+                        if (IsLegalPlayerInitialMove(gameBoard, i) && IsLegalPlayerFinalMoveEat(gameBoard, i, i + gameDice.SecondCube, gameDice.SecondCube))
+                        {
+                            AvailableMovesEat.Add(new KeyValuePair<int, int>(i, i + gameDice.SecondCube));
+                        }
+                    }
+                }
+
+                return AvailableMovesEat;
+            }
+            else
             {
                 return GetAvailableMovesEatFromBar(gameBoard, gameDice);
             }
-
-            var availableMovesEat = new List<KeyValuePair<int, int>>();
-
-            for (int i = gameBoard.Triangles.Count - 1; i >= 0; i--)
-            {
-                if (!gameDice.RolledDouble)
-                {
-                    AddEatMoveIfValid(gameBoard, gameDice.FirstCube, availableMovesEat, i, i + gameDice.FirstCube);
-                }
-
-                AddEatMoveIfValid(gameBoard, gameDice.SecondCube, availableMovesEat, i, i + gameDice.SecondCube);
-            }
-
-            return availableMovesEat;
         }
 
         public override IEnumerable<KeyValuePair<int, int>> GetAvailableMovesEatFromBar(Board gameBoard, Dice gameDice)
         {
-            var availableMoves = new List<KeyValuePair<int, int>>();
+            List<KeyValuePair<int, int>> AvailableMoves = new List<KeyValuePair<int, int>>();
 
-            AddEatMoveFromBarIfValid(gameBoard, gameDice.FirstCube, availableMoves);
-            AddEatMoveFromBarIfValid(gameBoard, gameDice.SecondCube, availableMoves);
+            if (gameDice.FirstCube != 0)  // check if that cube wasn't reset
+            {
+                if (IsLegalPlayerFinalMoveEat(gameBoard, -1, -1 + gameDice.FirstCube, gameDice.FirstCube))
+                {
+                    AvailableMoves.Add(new KeyValuePair<int, int>(-1, -1 + gameDice.FirstCube));
+                }
+            }
+            if (gameDice.SecondCube != 0)  // check if that cube wasn't reset
+            {
+                if (IsLegalPlayerFinalMoveEat(gameBoard, -1, -1 + gameDice.SecondCube, gameDice.SecondCube))
+                {
+                    AvailableMoves.Add(new KeyValuePair<int, int>(-1, -1 + gameDice.SecondCube));
+                }
+            }
 
-            return availableMoves;
+            return AvailableMoves;
         }
 
         public override IEnumerable<KeyValuePair<int, int>> GetAvailableBearOffMoves(Board gameBoard, Dice gameDice)
         {
-            var availableMoves = new List<KeyValuePair<int, int>>();
+            List<KeyValuePair<int, int>> AvailableMoves = new List<KeyValuePair<int, int>>();
 
-            for (int i = gameBoard.Triangles.Count - 1; i >= 18; i--)
+            for (int i = 18; i <= 23; i++)
             {
-                if (!gameDice.RolledDouble)
+                if (!gameDice.RolledDouble)  // not double. if double - only check once (next if)
                 {
-                    AddBearOffMoveIfValid(gameBoard, gameDice.FirstCube, availableMoves, i);
+                    if (gameDice.FirstCube != 0)  // check if cube was not 'reset' to 0
+                    {
+                        if (IsLegalPlayerInitialMove(gameBoard, i) && IsLegalPlayerBearOffMove(i, gameDice.FirstCube))
+                        {
+                            AvailableMoves.Add(new KeyValuePair<int, int>(i, gameDice.FirstCube));
+                        }
+                    }
                 }
 
-                AddBearOffMoveIfValid(gameBoard, gameDice.SecondCube, availableMoves, i);
+                if (gameDice.SecondCube != 0)  // check if cube was not 'reset' to 0
+                {
+                    // 2nd cube can also be an available 'move' (if he hasn't rolled double)
+                    if (IsLegalPlayerInitialMove(gameBoard, i) && IsLegalPlayerBearOffMove(i, gameDice.SecondCube))
+                    {
+                        AvailableMoves.Add(new KeyValuePair<int, int>(i, gameDice.SecondCube));
+                    }
+                }
             }
 
-            return availableMoves;
+            return AvailableMoves;
         }
 
         public override bool IsLegalPlayerInitialMove(Board gameBoard, int index)
         {
-            return gameBoard.Triangles[index].CheckersColor == CheckerColor.Red && gameBoard.GameBar.NumOfRedCheckers == 0;
+            if (gameBoard.Triangles[index].CheckersColor == CheckerColor.Red && gameBoard.GameBar.NumOfRedCheckers == 0)
+            {
+                return true;
+            }
+
+            return false;
         }
 
-        public override bool IsLegalPlayerFinalMove(Board gameBoard, int fromIndex, int toIndex, int cubeNumber)
+        public override bool IsLegalPlayerFinalMove(Board gameBoard, int fromIndex, int toIndex, int cubeNumber) // check if came from bar? -1...
         {
-            return toIndex < gameBoard.Triangles.Count && // Check if the 'toIndex' is within the bounds of the board
-                   toIndex - fromIndex == cubeNumber && // Check if the move is consistent with the cubeNumber
-                   (gameBoard.Triangles[toIndex].CheckersColor == null || gameBoard.Triangles[toIndex].CheckersColor == CheckerColor.Red); // Check if the destination is empty or occupied by the player's own checker
+            if (toIndex - fromIndex == cubeNumber)
+            {
+                if (gameBoard.Triangles[toIndex].CheckersColor == null || gameBoard.Triangles[toIndex].CheckersColor == CheckerColor.Red)  // 2nd condition ?
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
-
-        public override bool IsLegalPlayerFinalMoveEat(Board gameBoard, int fromIndex, int toIndex, int cubeNumber)
+        public override bool IsLegalPlayerFinalMoveEat(Board gameBoard, int fromIndex, int toIndex, int cubeNumber) // check if came from bar? -1...
         {
-            return toIndex < gameBoard.Triangles.Count && // Check if the 'toIndex' is within the bounds of the board
-                   toIndex - fromIndex == cubeNumber && // Check if the move is consistent with the cubeNumber
-                   gameBoard.Triangles[toIndex].CheckersColor == CheckerColor.Black && // Check if the destination is occupied by black checkers
-                   gameBoard.Triangles[toIndex].NumOfCheckers == 1; // Check if there's only one black checker at the destination
+            if (toIndex - fromIndex == cubeNumber)
+            {
+                if (gameBoard.Triangles[toIndex].CheckersColor == CheckerColor.Black && gameBoard.Triangles[toIndex].NumOfCheckers == 1)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public override bool IsLegalPlayerBearOffMove(int fromIndex, int cubeNumber)
         {
-            return fromIndex + cubeNumber >= 24;
+            if (fromIndex + cubeNumber >= 24)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public override bool CanBearOffCheckers(Board gameBoard)
         {
-            int numOfCheckersOutsideHome = gameBoard.GameBar.NumOfRedCheckers;
+            int NumOfCheckersOutsideHome = gameBoard.GameBar.NumOfRedCheckers;
 
             for (int i = 0; i <= 17; i++)
             {
                 if (gameBoard.Triangles[i].CheckersColor == CheckerColor.Red)
                 {
-                    numOfCheckersOutsideHome += gameBoard.Triangles[i].NumOfCheckers;
+                    NumOfCheckersOutsideHome += gameBoard.Triangles[i].NumOfCheckers;
                 }
             }
 
-            return numOfCheckersOutsideHome == 0;
+            if (NumOfCheckersOutsideHome > 0)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public override void UpdateCheckersAtHome(Board gameBoard)
@@ -141,67 +238,6 @@ namespace BackgammonLogic
                 {
                     CheckersAtHome += gameBoard.Triangles[i].NumOfCheckers;
                 }
-            }
-        }
-
-        private void AddMoveIfValid(Board gameBoard, int diceValue, List<KeyValuePair<int, int>> availableMoves, int fromIndex, int toIndex)
-        {
-            if (toIndex < gameBoard.Triangles.Count && diceValue != 0 && IsLegalPlayerInitialMove(gameBoard, fromIndex) && IsLegalPlayerFinalMove(gameBoard, fromIndex, toIndex, diceValue))
-            {
-                availableMoves.Add(new KeyValuePair<int, int>(fromIndex, toIndex));
-            }
-        }
-
-
-        private void AddMoveFromBarIfValid(Board gameBoard, int diceValue, List<KeyValuePair<int, int>> availableMoves)
-        {
-            if (diceValue != 0 && IsLegalPlayerFinalMove(gameBoard, 24, 24 + diceValue, diceValue))
-            {
-                availableMoves.Add(new KeyValuePair<int, int>(24, 24 + diceValue));
-            }
-        }
-
-        private void AddEatMoveIfValid(Board gameBoard, int diceValue, List<KeyValuePair<int, int>> availableMovesEat, int fromIndex, int toIndex)
-        {
-            if (toIndex >= 0 && diceValue != 0 && IsLegalPlayerInitialMove(gameBoard, fromIndex))
-            {
-                // Check if the move is valid without considering eating
-                bool isValidMove = IsLegalPlayerFinalMove(gameBoard, fromIndex, toIndex, diceValue);
-
-                // Check if the destination is occupied by a single opponent checker
-                if (isValidMove && gameBoard.Triangles[toIndex].CheckersColor == CheckerColor.Red && gameBoard.Triangles[toIndex].NumOfCheckers == 1)
-                {
-                    // If so, add the move and indicate eating
-                    availableMovesEat.Add(new KeyValuePair<int, int>(fromIndex, toIndex));
-                }
-            }
-        }
-
-        private void AddEatMoveFromBarIfValid(Board gameBoard, int diceValue, List<KeyValuePair<int, int>> availableMovesEat)
-        {
-            // Calculate the destination index for a move from the bar
-            int toIndex = 24 - diceValue;
-
-            if (diceValue != 0 && toIndex >= 0 && toIndex < gameBoard.Triangles.Count)
-            {
-                // Check if the move is valid without considering eating
-                bool isValidMove = IsLegalPlayerFinalMove(gameBoard, 24, toIndex, diceValue);
-
-                // Check if the destination is occupied by a single opponent checker
-                if (isValidMove && gameBoard.Triangles[toIndex].CheckersColor == CheckerColor.Red && gameBoard.Triangles[toIndex].NumOfCheckers == 1)
-                {
-                    // If so, add the move and indicate eating
-                    availableMovesEat.Add(new KeyValuePair<int, int>(24, toIndex));
-                }
-            }
-        }
-
-
-        private void AddBearOffMoveIfValid(Board gameBoard, int diceValue, List<KeyValuePair<int, int>> availableMoves, int fromIndex)
-        {
-            if (diceValue != 0 && IsLegalPlayerInitialMove(gameBoard, fromIndex) && IsLegalPlayerBearOffMove(fromIndex, diceValue))
-            {
-                availableMoves.Add(new KeyValuePair<int, int>(fromIndex, 24));
             }
         }
     }
