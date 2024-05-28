@@ -53,5 +53,7 @@ namespace BackgammonLogic
         public abstract bool CanBearOffCheckers(Board gameBoard);
 
         public abstract void UpdateCheckersAtHome(Board gameBoard);
+
+      
     }
 }

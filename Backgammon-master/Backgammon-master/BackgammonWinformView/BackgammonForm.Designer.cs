@@ -126,22 +126,22 @@
             // 
             // turnLabel
             // 
-            this.turnLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 17F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.turnLabel.Location = new System.Drawing.Point(1373, 15);
+            this.turnLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.turnLabel.Location = new System.Drawing.Point(1381, 20);
             this.turnLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.turnLabel.Name = "turnLabel";
-            this.turnLabel.Size = new System.Drawing.Size(104, 43);
+            this.turnLabel.Size = new System.Drawing.Size(74, 43);
             this.turnLabel.TabIndex = 25;
-            this.turnLabel.Text = "Turn :";
+            this.turnLabel.Text = "Hamle Sırası :";
             // 
             // roleDiceButton
             // 
-            this.roleDiceButton.Location = new System.Drawing.Point(91, 4);
+            this.roleDiceButton.Location = new System.Drawing.Point(73, 4);
             this.roleDiceButton.Margin = new System.Windows.Forms.Padding(4);
             this.roleDiceButton.Name = "roleDiceButton";
-            this.roleDiceButton.Size = new System.Drawing.Size(112, 33);
+            this.roleDiceButton.Size = new System.Drawing.Size(144, 33);
             this.roleDiceButton.TabIndex = 26;
-            this.roleDiceButton.Text = "Roll Dice !";
+            this.roleDiceButton.Text = "Zarları At";
             this.roleDiceButton.UseVisualStyleBackColor = true;
             this.roleDiceButton.Click += new System.EventHandler(this.roleDiceButton_Click);
             // 
@@ -380,8 +380,8 @@
             this.msgLabel.Name = "msgLabel";
             this.msgLabel.Size = new System.Drawing.Size(295, 95);
             this.msgLabel.TabIndex = 29;
-            this.msgLabel.Text = "Welcome to Backgammon ! Red Player, you will start the game ! Roll the dice to st" +
-    "art !";
+            this.msgLabel.Text = "Tavla Oynamaya Hazır Mısın! Kırmızı Oyuncu, Hadi Zarları Yuvarla Oyun Başlasın !!" +
+    "!\r\n";
             // 
             // label1
             // 
@@ -833,7 +833,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "BackgammonForm";
-            this.Text = "Oren\'s Backgammon";
+            this.Text = "Tavla Oyunu";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox23)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox22)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox21)).EndInit();

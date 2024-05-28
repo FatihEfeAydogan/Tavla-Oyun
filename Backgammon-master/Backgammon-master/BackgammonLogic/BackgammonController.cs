@@ -24,8 +24,8 @@ namespace BackgammonLogic
 
         public BackgammonController()
         {
-            _RedPlayer = new RedPlayer("Red Player", CheckerColor.Red);
-            _BlackPlayer = new BlackPlayer("Black Player", CheckerColor.Black);
+            _RedPlayer = new RedPlayer("Kırmızı Oyuncu", CheckerColor.Red);
+            _BlackPlayer = new BlackPlayer("Siyah Oyuncu", CheckerColor.Black);
             
             GameBoard = new Board();
             GameDice = new Dice();
@@ -340,5 +340,12 @@ namespace BackgammonLogic
         {
             MovesLeft = 0;
         }
+
+
+      
+        
+
+
+
     }
 }

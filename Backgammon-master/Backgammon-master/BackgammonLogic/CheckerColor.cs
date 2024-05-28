@@ -9,6 +9,7 @@ namespace BackgammonLogic
     public enum CheckerColor
     {
         Red,
-        Black
+        Black,
+        Green
     }
 }

@@ -29,6 +29,7 @@ namespace BackgammonWinformView
 
         public bool DrawBlackBarRequired { get; private set; }
 
+ 
         public List<PictureBox> TrianglesPictureBoxes { get; private set; }
 
         private const int drawCheckerShiftX = 6;
@@ -62,7 +63,7 @@ namespace BackgammonWinformView
             }
             else
             {
-                MessageBox.Show(string.Format("{0} you need to roll the dice first !", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name));
+                MessageBox.Show(string.Format("{0} Önce zarları atmalısın!", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name));
             }
         }
 
@@ -78,7 +79,7 @@ namespace BackgammonWinformView
             }
             else
             {
-                msgLabel.Text = string.Format("You can't move there, {0}. Waiting for your move.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
+                msgLabel.Text = string.Format("Oraya Gidemezsin, {0}. Sıranı bekle.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
             }
         }
 
@@ -99,12 +100,12 @@ namespace BackgammonWinformView
 
             if (GameController.PlayerHasAvailableMoves() && GameController.MovesLeft > 0)    // including moves from the bar if he's stuck there.
             {
-                msgLabel.Text = string.Format("Choose from where to move your checkers, {0}.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
+                msgLabel.Text = string.Format("Taşını oynatmak istediğin yeri seç, {0}.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
             }
             else if (!GameController.PlayerHasAvailableMoves() && GameController.MovesLeft != 0) // no moves for this guy. 
             {
                 GameController.ResetMovesLeft();
-                MessageBox.Show(string.Format("You have no available moves, {0}. Your turn is forfeit.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name));
+                MessageBox.Show(string.Format("Uygun hamlen yok, {0}. Sıra rakibe geçti.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name));
             }
             if (GameController.MovesLeft == 0)
             {
@@ -120,12 +121,12 @@ namespace BackgammonWinformView
 
             if (GameController.PlayerHasAvailableMoves() && GameController.MovesLeft > 0)    // including moves from the bar if he's stuck there.
             {
-                msgLabel.Text = string.Format("Choose from where to move your checkers, {0}.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
+                msgLabel.Text = string.Format("Taşını oynatmak istediğin yeri seç, {0}.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
             }
             else if (!GameController.PlayerHasAvailableMoves() && GameController.MovesLeft != 0) // no moves for this guy. 
             {
                 GameController.ResetMovesLeft();
-                MessageBox.Show(string.Format("You have no available moves, {0}. Your turn is forfeit.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name));
+                MessageBox.Show(string.Format("Uygun hamlen yok, {0}. Sıra rakibe geçti.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name));
             }
 
             if (GameController.MovesLeft == 0)
@@ -138,7 +139,7 @@ namespace BackgammonWinformView
 
         private void CancelInitialMove()
         {
-            msgLabel.Text = string.Format("Choose from where to move your checkers, {0}.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
+            msgLabel.Text = string.Format("Taşını oynatmak istediğin yeri seç, {0}.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
             GameController.SetPlayerInitialMove(null);
 
             CancelHighlightRequired = true;
@@ -151,7 +152,7 @@ namespace BackgammonWinformView
             if (GameController.IsLegalInitialMove(clickedTriangle))
             {
                 GameController.SetPlayerInitialMove(clickedTriangle);
-                msgLabel.Text = string.Format("Waiting for {0} move...", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
+                msgLabel.Text = string.Format("Hamle {0} Bekleniyor...", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
 
                 HighlightTriangleRequired = true;
                 boardPictureBox.Refresh();
@@ -160,15 +161,15 @@ namespace BackgammonWinformView
             else if ((GameController._RedPlayer.IsMyTurn == true && GameController.GameBoard.GameBar.NumOfRedCheckers > 0) ||
                      (GameController._BlackPlayer.IsMyTurn == true && GameController.GameBoard.GameBar.NumOfBlackCheckers > 0))
             {
-                msgLabel.Text = string.Format("You can't move checkers while you have checkers on the Bar, {0}.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
+                msgLabel.Text = string.Format("Taşın kırıkken oynayamazsın {0}.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
             }
             else if (GameController.GameBoard.Triangles[clickedTriangle].CheckersColor == null)   // empty triangle (initial choice)
             {
-                msgLabel.Text = string.Format("You don't have any checkers there, {0}.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
+                msgLabel.Text = string.Format("Orada Taşın yok, {0}.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
             }
             else
             {
-                msgLabel.Text = string.Format("Those are the enemy's checkers, {0}.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
+                msgLabel.Text = string.Format("Onlar rakibin taşları, {0}.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
             }
         }
 
@@ -177,13 +178,13 @@ namespace BackgammonWinformView
             boardPictureBox.Refresh();
             sidePanel.Refresh();
 
-            msgLabel.Text = string.Format("Choose from where to move your checkers, {0}.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
+            msgLabel.Text = string.Format("Taşları oynatmak istediğin yeri seç, {0}.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
 
             if (GameController.MovesLeft == 0)
             {
                 ClearDiceImages();
                 GameController.RolledDice = false;
-                msgLabel.Text = string.Format("{0} its your turn. Please roll the dice.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
+                msgLabel.Text = string.Format("{0} Senin sıran. Zarları yuvarla.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
             }
         }
 
@@ -280,14 +281,6 @@ namespace BackgammonWinformView
             }
         }
 
-        private void DrawTriangles(PaintEventArgs e)
-        {
-            for (int i = 0; i < GameController.GameBoard.Triangles.Count; i++)
-            {
-                DrawCheckersInTriangle(e, i, false);
-            }
-        }
-
         private void DrawCheckersInTriangle(PaintEventArgs e, int triangleNum, bool highlight)
         {
             int drawShiftY = SetDrawShiftY(GameController.GameBoard.Triangles[triangleNum].NumOfCheckers);
@@ -378,8 +371,8 @@ namespace BackgammonWinformView
 
             redCheckersBearOff.BackColor = Color.Transparent;
             blackCheckersBearOff.BackColor = Color.Transparent;
-            redCheckersBearOff.Visible = false;
-            blackCheckersBearOff.Visible = false;
+            redCheckersBearOff.Visible = true;
+            blackCheckersBearOff.Visible = true;
 
 
         }
@@ -470,7 +463,7 @@ namespace BackgammonWinformView
             }
             else
             {
-                MessageBox.Show(string.Format("{0} you have already rolled !", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name));
+                MessageBox.Show(string.Format("{0} Zaten yuvarladın!", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name));
             }
 
             EvaluateInitialAvailableMoves();
@@ -481,11 +474,11 @@ namespace BackgammonWinformView
             if (GameController.PlayerHasAvailableMoves() || GameController.PlayerHasAvailableBearOffMoves())    // including moves from the bar if he's stuck there.
             {
                 GameController.UpdateMovesLeft();
-                msgLabel.Text = string.Format("Choose from where to move your checkers, {0}.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
+                msgLabel.Text = string.Format("Taşını oynatmak istediğin yeri seç, {0}.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
             }
             else  // no moves for this guy. 
             {
-                MessageBox.Show(string.Format("You have no available moves, {0}. Your turn is forfeit.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name));
+                MessageBox.Show(string.Format("Uygun hamlen yok, {0}. Sıran geçti.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name));
                 GameController.SwapTurns();
                 RefreshUserInterfaceAfterTurn();
             }
@@ -542,7 +535,7 @@ namespace BackgammonWinformView
                 }
                 else
                 {
-                    MessageBox.Show(string.Format("{0} you need to roll the dice first !", GameController._BlackPlayer.Name));
+                    MessageBox.Show(string.Format("{0} Önce zarları yuvarla adamım!", GameController._BlackPlayer.Name));
                 }
             }
         }
@@ -560,7 +553,7 @@ namespace BackgammonWinformView
                 }
                 else
                 {
-                    MessageBox.Show(string.Format("{0} you need to roll the dice first !", GameController._RedPlayer.Name));
+                    MessageBox.Show(string.Format("{0} Önce zarları yuvarla adamım!", GameController._RedPlayer.Name));
                 }
             }
         }
@@ -596,14 +589,14 @@ namespace BackgammonWinformView
 
                             if (GameController._RedPlayer.CheckersAtHome == 0)
                             {
-                                MessageBox.Show("Game over - Red player is the winner !");
+                                MessageBox.Show("OYUN BİTTİ - Kırmızı oyuncu siyah oyuncuyu kucağa oturttu !");
                             }
                         }
                     }
                 }
                 else  // can't bear off.
                 {
-                    MessageBox.Show(string.Format("You can't bear off any checkers yet, {0}.", GameController._RedPlayer.Name));
+                    MessageBox.Show(string.Format("Taşları toplayamazsın, {0}.", GameController._RedPlayer.Name));
                 }
             }
             else   // black turn.
@@ -627,14 +620,14 @@ namespace BackgammonWinformView
 
                             if(GameController._BlackPlayer.CheckersAtHome == 0)
                             {
-                                MessageBox.Show("Game over - Black player is the winner !");
+                                MessageBox.Show("OYUN BİTTİ - Siyah oyuncu Kırmızı oyuncuyu kucağa oturttu !");
                             }
                         }
                     }
                 }
                 else  // can't bear off.
                 {
-                    MessageBox.Show(string.Format("You can't bear off any checkers yet, {0}.", GameController._RedPlayer.Name));
+                    MessageBox.Show(string.Format("Taşları toplayamazsın, {0}.", GameController._RedPlayer.Name));
                 }
             }
         }
@@ -654,5 +647,41 @@ namespace BackgammonWinformView
                 // Hiçbir şey yapma, mevcut formda kal
             }
         }
+
+        private void DrawTriangles(PaintEventArgs e)
+        {
+            for (int i = 0; i < GameController.GameBoard.Triangles.Count; i++)
+            {
+                // Üçgenin rengini belirleme
+                if (GameController.RolledDice && GameController.IsLegalInitialMove(i))
+                {
+                    e.Graphics.FillRectangle(Brushes.LightGreen, TrianglesPictureBoxes[i].Bounds);
+                }
+                else
+                {
+                    // Orijinal üçgen rengi
+                    e.Graphics.FillRectangle(Brushes.DarkGreen, TrianglesPictureBoxes[i].Bounds);
+                }
+
+                // Üçgen içindeki taşları çizme
+                DrawCheckersInTriangle(e, i, false);
+            }
+        }
+
+
+        // Göstergeyi çizme fonksiyonu
+        private void DrawIndicator(PaintEventArgs e, Rectangle bounds)
+        {
+            // Örneğin, bir daire şeklinde gösterge çizebilirsiniz
+            int diameter = Math.Min(bounds.Width, bounds.Height) / 2;
+            int x = bounds.X + (bounds.Width - diameter) / 2;
+            int y = bounds.Y + (bounds.Height - diameter) / 2;
+
+            e.Graphics.FillEllipse(Brushes.Red, x, y, diameter, diameter);
+        }
+
+
+
+
     }
 }
