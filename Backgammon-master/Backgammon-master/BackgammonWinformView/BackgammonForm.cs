@@ -80,7 +80,7 @@ namespace BackgammonWinformView
             }
             else
             {
-                msgLabel.Text = string.Format("Oraya Gidemezsin, {0}. Sıranı bekle.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
+                msgLabel.Text = string.Format("Oraya Gidemezsin, {0}.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
             }
         }
 
@@ -101,7 +101,7 @@ namespace BackgammonWinformView
 
             if (GameController.PlayerHasAvailableMoves() && GameController.MovesLeft > 0)    // including moves from the bar if he's stuck there.
             {
-                msgLabel.Text = string.Format("Taşını oynatmak istediğin yeri seç, {0}.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
+                msgLabel.Text = string.Format("Oynatmak istediğin taşı seç, {0}.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
             }
             else if (!GameController.PlayerHasAvailableMoves() && GameController.MovesLeft != 0) // no moves for this guy. 
             {
@@ -122,7 +122,7 @@ namespace BackgammonWinformView
 
             if (GameController.PlayerHasAvailableMoves() && GameController.MovesLeft > 0)    // including moves from the bar if he's stuck there.
             {
-                msgLabel.Text = string.Format("Taşını oynatmak istediğin yeri seç, {0}.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
+                msgLabel.Text = string.Format("Oynatmak istediğin taşı seç, {0}.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
             }
             else if (!GameController.PlayerHasAvailableMoves() && GameController.MovesLeft != 0) // no moves for this guy. 
             {
@@ -140,7 +140,7 @@ namespace BackgammonWinformView
 
         private void CancelInitialMove()
         {
-            msgLabel.Text = string.Format("Taşını oynatmak istediğin yeri seç, {0}.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
+            msgLabel.Text = string.Format("Oynatmak istediğin taşı seç, {0}.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
             GameController.SetPlayerInitialMove(null);
 
             CancelHighlightRequired = true;
@@ -179,7 +179,7 @@ namespace BackgammonWinformView
             boardPictureBox.Refresh();
             sidePanel.Refresh();
 
-            msgLabel.Text = string.Format("Taşları oynatmak istediğin yeri seç, {0}.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
+            msgLabel.Text = string.Format("Oynatmak istediğin taşı seç, {0}.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
 
             if (GameController.MovesLeft == 0)
             {
@@ -475,7 +475,7 @@ namespace BackgammonWinformView
             if (GameController.PlayerHasAvailableMoves() || GameController.PlayerHasAvailableBearOffMoves())    // including moves from the bar if he's stuck there.
             {
                 GameController.UpdateMovesLeft();
-                msgLabel.Text = string.Format("Taşını oynatmak istediğin yeri seç, {0}.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
+                msgLabel.Text = string.Format("Oynatmak istediğin taşı seç, {0}.", GameController._RedPlayer.IsMyTurn ? GameController._RedPlayer.Name : GameController._BlackPlayer.Name);
             }
             else  // no moves for this guy. 
             {
@@ -590,7 +590,7 @@ namespace BackgammonWinformView
 
                             if (GameController._RedPlayer.CheckersAtHome == 0)
                             {
-                                MessageBox.Show("OYUN BİTTİ - Kırmızı oyuncu siyah oyuncuyu kucağa oturttu !");
+                                MessageBox.Show("OYUN BİTTİ - Kırmızı oyuncu siyah oyuncuyu yendi !");
                             }
                         }
                     }
@@ -621,7 +621,7 @@ namespace BackgammonWinformView
 
                             if(GameController._BlackPlayer.CheckersAtHome == 0)
                             {
-                                MessageBox.Show("OYUN BİTTİ - Siyah oyuncu Kırmızı oyuncuyu kucağa oturttu !");
+                                MessageBox.Show("OYUN BİTTİ - Siyah oyuncu Kırmızı oyuncuyu yendi !");
                             }
                         }
                     }
