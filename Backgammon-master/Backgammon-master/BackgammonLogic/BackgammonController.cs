@@ -157,30 +157,7 @@ namespace BackgammonLogic
             for (int toIndex = 0; toIndex < 24; toIndex++)
             {
 
-                if (_RedPlayer.IsMyTurn)
-                {
-                    if (GameDice.RolledDouble)
-                    {
-                        isPossible = _RedPlayer.IsLegalPlayerFinalMove(GameBoard, PlayerInitialTriangleChoice.Value, toIndex, GameDice.FirstCube);
-                    }
-                    else
-                    {
-                        isPossible = _RedPlayer.IsLegalPlayerFinalMove(GameBoard, PlayerInitialTriangleChoice.Value, toIndex, GameDice.FirstCube) ||
-                                     _RedPlayer.IsLegalPlayerFinalMove(GameBoard, PlayerInitialTriangleChoice.Value, toIndex, GameDice.SecondCube);
-                    }
-                }
-                else // black player's turn
-                {
-                    if (GameDice.RolledDouble)
-                    {
-                        isPossible = _BlackPlayer.IsLegalPlayerFinalMove(GameBoard, PlayerInitialTriangleChoice.Value, toIndex, GameDice.FirstCube);
-                    }
-                    else
-                    {
-                        isPossible = _BlackPlayer.IsLegalPlayerFinalMove(GameBoard, PlayerInitialTriangleChoice.Value, toIndex, GameDice.FirstCube) ||
-                                     _BlackPlayer.IsLegalPlayerFinalMove(GameBoard, PlayerInitialTriangleChoice.Value, toIndex, GameDice.SecondCube);
-                    }
-                }
+                isPossible = IsLegalFinalMove(toIndex);
 
                 if (isPossible)
                 {
