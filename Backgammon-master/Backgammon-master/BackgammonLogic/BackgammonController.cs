@@ -145,6 +145,56 @@ namespace BackgammonLogic
             }
         }
 
+        /// <summary>
+        /// Detects all possible moves.
+        /// </summary>
+        /// <returns></returns>
+        public List<int> AllPossibleMoves()
+        {
+            List<int> availableMoves = new List<int>();
+            bool isPossible;
+
+            for (int toIndex = 0; toIndex < 24; toIndex++)
+            {
+
+                if (_RedPlayer.IsMyTurn)
+                {
+                    if (GameDice.RolledDouble)
+                    {
+                        isPossible = _RedPlayer.IsLegalPlayerFinalMove(GameBoard, PlayerInitialTriangleChoice.Value, toIndex, GameDice.FirstCube);
+                    }
+                    else
+                    {
+                        isPossible = _RedPlayer.IsLegalPlayerFinalMove(GameBoard, PlayerInitialTriangleChoice.Value, toIndex, GameDice.FirstCube) ||
+                                     _RedPlayer.IsLegalPlayerFinalMove(GameBoard, PlayerInitialTriangleChoice.Value, toIndex, GameDice.SecondCube);
+                    }
+                }
+                else // black player's turn
+                {
+                    if (GameDice.RolledDouble)
+                    {
+                        isPossible = _BlackPlayer.IsLegalPlayerFinalMove(GameBoard, PlayerInitialTriangleChoice.Value, toIndex, GameDice.FirstCube);
+                    }
+                    else
+                    {
+                        isPossible = _BlackPlayer.IsLegalPlayerFinalMove(GameBoard, PlayerInitialTriangleChoice.Value, toIndex, GameDice.FirstCube) ||
+                                     _BlackPlayer.IsLegalPlayerFinalMove(GameBoard, PlayerInitialTriangleChoice.Value, toIndex, GameDice.SecondCube);
+                    }
+                }
+
+                if (isPossible)
+                {
+                    availableMoves.Add(toIndex);
+                }
+            }
+
+            Console.WriteLine("All moves: " + string.Join(", ", availableMoves));
+
+            return availableMoves;
+        }
+
+
+
         // Dude wants to move 'to'
         public bool IsLegalFinalMove(int toIndex)
         {

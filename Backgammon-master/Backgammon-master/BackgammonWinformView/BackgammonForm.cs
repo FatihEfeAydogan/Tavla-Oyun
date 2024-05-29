@@ -51,6 +51,7 @@ namespace BackgammonWinformView
                 if (GameController.PlayerInitialTriangleChoice == null)    // no choice 'from' has been made yet. trying to determine player's initial checker choice.
                 {
                     TryGetAndExecuteInitialMove(clickedTriangle);
+                    GameController.AllPossibleMoves();
                 }
                 else if (clickedTriangle == GameController.PlayerInitialTriangleChoice)  // cancel 'from'
                 {
