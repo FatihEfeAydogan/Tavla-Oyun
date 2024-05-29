@@ -31,11 +31,14 @@ namespace BackgammonWinformView
 
 
         private List<int> possibleMoves;
+        private List<int> possibleEats;
  
         public List<PictureBox> TrianglesPictureBoxes { get; private set; }
 
         // Create a semi-transparent light green color
         readonly private Color semiTransparentLightGreen = Color.FromArgb(128, Color.LightGreen);
+        // Create a semi-transparent light red color
+        readonly private Color semiTransparentLightRed = Color.FromArgb(128, Color.Red);
 
         private const int drawCheckerShiftX = 6;
         private const int checkerRadiusSize = 53;
@@ -57,12 +60,14 @@ namespace BackgammonWinformView
                 {
                     TryGetAndExecuteInitialMove(clickedTriangle);
                     possibleMoves = GameController.AllPossibleMoves(clickedTriangle);
+                    possibleEats = GameController.AllPossibleEats(clickedTriangle);
                     boardPictureBox.Refresh();
                 }
                 else if (clickedTriangle == GameController.PlayerInitialTriangleChoice)  // cancel 'from'
                 {
                     CancelInitialMove();
                     possibleMoves.Clear();
+                    possibleEats.Clear();
                     boardPictureBox.Refresh();
                 }
                 else   // wants to move 'to' here
@@ -666,6 +671,12 @@ namespace BackgammonWinformView
                 {
                     // Fill the rectangle with the semi-transparent color
                     e.Graphics.FillRectangle(new SolidBrush(semiTransparentLightGreen), TrianglesPictureBoxes[i].Bounds);
+                }
+
+                else if (GameController.RolledDice && possibleEats != null && possibleEats.Contains(i))
+                {
+                    // Fill the rectangle with the semi-transparent color
+                    e.Graphics.FillRectangle(new SolidBrush(semiTransparentLightRed), TrianglesPictureBoxes[i].Bounds);
                 }
 
                 // Üçgen içindeki taşları çizme

@@ -152,6 +152,12 @@ namespace BackgammonLogic
         public List<int> AllPossibleMoves(int clickedTriangle)
         {
             List<int> availableMoves = new List<int>();
+
+            if (!PlayerInitialTriangleChoice.HasValue) 
+            {
+                return availableMoves;
+            }
+            
             SetPlayerInitialMove(clickedTriangle);
             bool isPossible;
 
@@ -169,6 +175,36 @@ namespace BackgammonLogic
             Console.WriteLine("All moves: " + string.Join(", ", availableMoves));
 
             return availableMoves;
+        }
+
+
+        public List<int> AllPossibleEats(int clickedTriangle)
+        {
+            List<int> availableEats = new List<int>();
+
+            if (!PlayerInitialTriangleChoice.HasValue)
+            {
+                return availableEats;
+            }
+
+
+            SetPlayerInitialMove(clickedTriangle);
+            bool isPossible;
+
+            for (int toIndex = 0; toIndex < 24; toIndex++)
+            {
+
+                isPossible = IsLegalFinalMoveEat(toIndex);
+
+                if (isPossible)
+                {
+                    availableEats.Add(toIndex);
+                }
+            }
+
+            Console.WriteLine("All checkers we can eat: " + string.Join(", ", availableEats));
+
+            return availableEats;
         }
 
 
