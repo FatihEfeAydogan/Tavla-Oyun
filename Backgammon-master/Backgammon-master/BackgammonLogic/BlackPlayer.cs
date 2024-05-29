@@ -172,9 +172,7 @@ namespace BackgammonLogic
         }
 
         public override bool IsLegalPlayerFinalMove(Board gameBoard, int fromIndex, int toIndex, int cubeNumber)// check if came from bar? -1...
-        {
-
-          
+        {   
                 if (fromIndex - toIndex == cubeNumber)
                 {
                     if (gameBoard.Triangles[toIndex].CheckersColor == null || gameBoard.Triangles[toIndex].CheckersColor == CheckerColor.Black)
@@ -242,5 +240,7 @@ namespace BackgammonLogic
                 }
             }
         }
+
+        
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BaslangicForm));
             this.Cikis = new System.Windows.Forms.Button();
             this.Oyna = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
@@ -39,6 +40,7 @@
             // 
             // Cikis
             // 
+            this.Cikis.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Cikis.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.Cikis.Location = new System.Drawing.Point(515, 269);
             this.Cikis.Name = "Cikis";
@@ -50,6 +52,7 @@
             // 
             // Oyna
             // 
+            this.Oyna.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Oyna.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.Oyna.Location = new System.Drawing.Point(515, 189);
             this.Oyna.Name = "Oyna";
@@ -119,8 +122,9 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "BaslangicForm";
-            this.Text = "BaslangicForm";
+            this.Text = "Tavla Oyunu";
             this.ResumeLayout(false);
             this.PerformLayout();
 

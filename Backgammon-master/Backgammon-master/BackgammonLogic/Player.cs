@@ -54,6 +54,7 @@ namespace BackgammonLogic
 
         public abstract void UpdateCheckersAtHome(Board gameBoard);
 
+        
       
     }
 }
