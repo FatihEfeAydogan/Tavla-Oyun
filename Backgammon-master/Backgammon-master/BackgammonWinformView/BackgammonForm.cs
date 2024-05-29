@@ -29,8 +29,13 @@ namespace BackgammonWinformView
 
         public bool DrawBlackBarRequired { get; private set; }
 
+
+        private List<int> possibleMoves;
  
         public List<PictureBox> TrianglesPictureBoxes { get; private set; }
+
+        // Create a semi-transparent light green color
+        readonly private Color semiTransparentLightGreen = Color.FromArgb(128, Color.LightGreen);
 
         private const int drawCheckerShiftX = 6;
         private const int checkerRadiusSize = 53;
@@ -51,11 +56,14 @@ namespace BackgammonWinformView
                 if (GameController.PlayerInitialTriangleChoice == null)    // no choice 'from' has been made yet. trying to determine player's initial checker choice.
                 {
                     TryGetAndExecuteInitialMove(clickedTriangle);
-                    GameController.AllPossibleMoves(clickedTriangle);
+                    possibleMoves = GameController.AllPossibleMoves(clickedTriangle);
+                    boardPictureBox.Refresh();
                 }
                 else if (clickedTriangle == GameController.PlayerInitialTriangleChoice)  // cancel 'from'
                 {
                     CancelInitialMove();
+                    possibleMoves.Clear();
+                    boardPictureBox.Refresh();
                 }
                 else   // wants to move 'to' here
                 {
@@ -654,14 +662,10 @@ namespace BackgammonWinformView
             for (int i = 0; i < GameController.GameBoard.Triangles.Count; i++)
             {
                 // Üçgenin rengini belirleme
-                if (GameController.RolledDice && GameController.IsLegalInitialMove(i))
+                if (GameController.RolledDice && possibleMoves != null && possibleMoves.Contains(i))
                 {
-                    e.Graphics.FillRectangle(Brushes.LightGreen, TrianglesPictureBoxes[i].Bounds);
-                }
-                else
-                {
-                    // Orijinal üçgen rengi
-                    e.Graphics.FillRectangle(Brushes.DarkGreen, TrianglesPictureBoxes[i].Bounds);
+                    // Fill the rectangle with the semi-transparent color
+                    e.Graphics.FillRectangle(new SolidBrush(semiTransparentLightGreen), TrianglesPictureBoxes[i].Bounds);
                 }
 
                 // Üçgen içindeki taşları çizme
