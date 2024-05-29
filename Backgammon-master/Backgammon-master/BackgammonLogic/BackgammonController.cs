@@ -149,9 +149,10 @@ namespace BackgammonLogic
         /// Detects all possible moves.
         /// </summary>
         /// <returns></returns>
-        public List<int> AllPossibleMoves()
+        public List<int> AllPossibleMoves(int clickedTriangle)
         {
             List<int> availableMoves = new List<int>();
+            SetPlayerInitialMove(clickedTriangle);
             bool isPossible;
 
             for (int toIndex = 0; toIndex < 24; toIndex++)
