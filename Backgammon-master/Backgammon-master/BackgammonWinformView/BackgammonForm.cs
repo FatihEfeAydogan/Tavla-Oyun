@@ -61,14 +61,18 @@ namespace BackgammonWinformView
                     TryGetAndExecuteInitialMove(clickedTriangle);
                     possibleMoves = GameController.AllPossibleMoves(clickedTriangle);
                     possibleEats = GameController.AllPossibleEats(clickedTriangle);
+                    HighlightTriangleRequired = true;
                     boardPictureBox.Refresh();
+                    HighlightTriangleRequired = false;
                 }
                 else if (clickedTriangle == GameController.PlayerInitialTriangleChoice)  // cancel 'from'
                 {
                     CancelInitialMove();
                     possibleMoves.Clear();
                     possibleEats.Clear();
+                    HighlightTriangleRequired = true;
                     boardPictureBox.Refresh();
+                    HighlightTriangleRequired = false;
                 }
                 else   // wants to move 'to' here
                 {

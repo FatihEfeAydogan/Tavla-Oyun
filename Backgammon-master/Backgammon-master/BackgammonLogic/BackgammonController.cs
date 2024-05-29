@@ -220,8 +220,8 @@ namespace BackgammonLogic
                 }
                 else
                 {
-                    return _RedPlayer.IsLegalPlayerFinalMove(GameBoard, PlayerInitialTriangleChoice.Value, toIndex, GameDice.FirstCube)  ||
-                           _RedPlayer.IsLegalPlayerFinalMove(GameBoard, PlayerInitialTriangleChoice.Value, toIndex, GameDice.SecondCube);
+                    return (_RedPlayer.IsLegalPlayerFinalMove(GameBoard, PlayerInitialTriangleChoice.Value, toIndex, GameDice.FirstCube)  ||
+                           _RedPlayer.IsLegalPlayerFinalMove(GameBoard, PlayerInitialTriangleChoice.Value, toIndex, GameDice.SecondCube)) && PlayerInitialTriangleChoice.Value != toIndex;
                 }
             }
             else // black player's turn
@@ -232,8 +232,8 @@ namespace BackgammonLogic
                 }
                 else
                 {
-                    return _BlackPlayer.IsLegalPlayerFinalMove(GameBoard, PlayerInitialTriangleChoice.Value, toIndex, GameDice.FirstCube) ||
-                           _BlackPlayer.IsLegalPlayerFinalMove(GameBoard, PlayerInitialTriangleChoice.Value, toIndex, GameDice.SecondCube);
+                    return (_BlackPlayer.IsLegalPlayerFinalMove(GameBoard, PlayerInitialTriangleChoice.Value, toIndex, GameDice.FirstCube) ||
+                           _BlackPlayer.IsLegalPlayerFinalMove(GameBoard, PlayerInitialTriangleChoice.Value, toIndex, GameDice.SecondCube)) && PlayerInitialTriangleChoice.Value != toIndex;
                 }
             }
         }
